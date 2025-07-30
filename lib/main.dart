@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tourism_app/model/tourism.dart';
-import 'package:tourism_app/screen/home/tourism_card_widget.dart';
+import 'package:tourism_app/screen/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,16 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Scaffold(
-        appBar: AppBar(title: Text('Tourism List')),
-        body: ListView.builder(
-          itemCount: tourismList.length,
-          itemBuilder: (context, index) {
-            final tourism = tourismList[index];
-            return TourismCard(tourism: tourism);
-          },
-        ),
-      ),
+      home: HomeScreen(),
     );
   }
 }
