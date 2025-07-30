@@ -15,7 +15,32 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Scaffold(),
+      home: Scaffold(
+        appBar: AppBar(title: Text('Tourism List')),
+        body: ListView.builder(
+          itemCount: tourismList.length,
+          itemBuilder: (context, index) {
+            final tourism = tourismList[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(tourism.name, style: const TextStyle(fontSize: 16)),
+                  Text(
+                    tourism.description,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
