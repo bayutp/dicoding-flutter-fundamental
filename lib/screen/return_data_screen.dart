@@ -24,9 +24,10 @@ class _ReturnDataScreenState extends State<ReturnDataScreen> {
                 decoration: const InputDecoration(labelText: 'Enter your name'),
               ),
             ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(context, _textController.text);
               },
               child: Text('Send'),
             ),

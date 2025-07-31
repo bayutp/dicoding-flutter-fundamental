@@ -25,10 +25,21 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const FirstScreen(),
         '/second': (context) => const SecondScreen(),
-        '/second-with-data': (context) => const SecondScreenWithData(),
         '/return-data': (context) => const ReturnDataScreen(),
         '/replacement': (context) => const ReplacementScreen(),
         '/another': (context) => const AnotherScreen(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/second-with-data') {
+          final args = settings.arguments as String;
+          return MaterialPageRoute(
+            builder: (_) => SecondScreenWithData(data: args),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) =>
+              const Scaffold(body: Center(child: Text('Route not found'))),
+        );
       },
     );
   }

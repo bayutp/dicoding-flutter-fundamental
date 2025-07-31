@@ -11,6 +11,7 @@ class AnotherScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Back to Firts Screen'),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);

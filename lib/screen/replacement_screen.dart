@@ -8,7 +8,9 @@ class ReplacementScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/another');
+          },
           child: Text('Open another screen'),
         ),
       ),
