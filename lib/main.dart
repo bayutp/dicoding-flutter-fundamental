@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tourism_app/model/tourism.dart';
+import 'package:tourism_app/screen/detail/detail_screen.dart';
 import 'package:tourism_app/screen/home/home_screen.dart';
+import 'package:tourism_app/static/navigation_route.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +19,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: HomeScreen(),
+      initialRoute: Navigationroute.homeRoute.name,
+      routes: {Navigationroute.homeRoute.name: (context) => const HomeScreen()},
+      onGenerateRoute: (settings) {
+        if (settings.name == Navigationroute.detailRoute.name) {
+          return MaterialPageRoute(
+            builder: (_) =>
+                DetailScreen(tourism: settings.arguments as Tourism),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) =>
+              Scaffold(body: Center(child: Text('Route not found'))),
+        );
+      },
     );
   }
 }
