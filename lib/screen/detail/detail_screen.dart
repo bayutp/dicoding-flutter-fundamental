@@ -40,10 +40,14 @@ class _DetailScreenState extends State<DetailScreen> {
                         children: [
                           Text(
                             widget.tourism.name,
-                            style: Theme.of(context).textTheme.titleLarge,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           SizedBox(height: 10),
-                          Text(widget.tourism.address),
+                          Text(
+                            widget.tourism.address,
+                            style: Theme.of(context).textTheme.labelLarge
+                                ?.copyWith(fontWeight: FontWeight.w400),
+                          ),
                         ],
                       ),
                     ),
@@ -51,13 +55,20 @@ class _DetailScreenState extends State<DetailScreen> {
                       children: [
                         Icon(Icons.favorite, color: Colors.red),
                         SizedBox(width: 4),
-                        Text('20', style: TextStyle(fontSize: 12)),
+                        Text(
+                          '20',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ],
                     ),
                   ],
                 ),
                 SizedBox(height: 20),
-                Text(widget.tourism.description, textAlign: TextAlign.justify),
+                Text(
+                  widget.tourism.description,
+                  textAlign: TextAlign.justify,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ],
             ),
           ),
