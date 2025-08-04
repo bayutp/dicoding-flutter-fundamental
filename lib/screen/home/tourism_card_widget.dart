@@ -38,7 +38,10 @@ class TourismCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(tourism.name, style: const TextStyle(fontSize: 16)),
+                  Text(
+                    tourism.name,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                   const SizedBox.square(dimension: 6),
                   Row(
                     children: [
@@ -48,6 +51,7 @@ class TourismCard extends StatelessWidget {
                           tourism.address,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                     ],
@@ -56,7 +60,12 @@ class TourismCard extends StatelessWidget {
                   Row(
                     children: [
                       Icon(Icons.favorite, color: Colors.red),
-                      Expanded(child: Text(tourism.like.toString())),
+                      Expanded(
+                        child: Text(
+                          tourism.like.toString(),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
                     ],
                   ),
                 ],
