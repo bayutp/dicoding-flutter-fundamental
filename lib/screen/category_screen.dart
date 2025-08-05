@@ -7,6 +7,9 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text('$selectedCategory Screen'),
+      ),
       child: Center(
         child: Text(
           '$selectedCategory Screen',
