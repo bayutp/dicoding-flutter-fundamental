@@ -16,7 +16,9 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     BuildContext context,
     double shrinkOffset,
     bool overlapsContent,
-  ) => child;
+  ) {
+    return child;
+  }
 
   @override
   double get maxExtent => maxHeight;
@@ -26,8 +28,8 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverHeaderDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxExtent ||
-        minHeight != oldDelegate.minExtent ||
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
         child != oldDelegate.child;
   }
 }
