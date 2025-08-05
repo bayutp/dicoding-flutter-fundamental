@@ -50,6 +50,7 @@ class LearningPathScreen extends StatelessWidget {
 
   SliverPersistentHeader _header(BuildContext context, String text) {
     return SliverPersistentHeader(
+      pinned: true,
       delegate: SliverHeaderDelegate(
         minHeight: 60,
         maxHeight: 150,
