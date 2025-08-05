@@ -28,7 +28,10 @@ class TourismCard extends StatelessWidget {
                   topLeft: Radius.circular(16),
                   bottomRight: Radius.circular(16),
                 ),
-                child: Image.network(tourism.image, fit: BoxFit.cover),
+                child: Hero(
+                  tag: tourism.image,
+                  child: Image.network(tourism.image, fit: BoxFit.cover),
+                ),
               ),
             ),
             const SizedBox.square(dimension: 8),
