@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tourism_app/model/tourism.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
-import 'package:tourism_app/screen/home/home_screen.dart';
+import 'package:tourism_app/screen/main/main_screen.dart';
 import 'package:tourism_app/static/navigation_route.dart';
 import 'package:tourism_app/style/theme/tourism_theme.dart';
 
@@ -20,19 +20,12 @@ class MyApp extends StatelessWidget {
       theme: TourismTheme.lightTheme,
       darkTheme: TourismTheme.darkTheme,
       themeMode: ThemeMode.system,
-      initialRoute: Navigationroute.homeRoute.name,
-      routes: {Navigationroute.homeRoute.name: (context) => const HomeScreen()},
-      onGenerateRoute: (settings) {
-        if (settings.name == Navigationroute.detailRoute.name) {
-          return MaterialPageRoute(
-            builder: (_) =>
-                DetailScreen(tourism: settings.arguments as Tourism),
-          );
-        }
-        return MaterialPageRoute(
-          builder: (_) =>
-              Scaffold(body: Center(child: Text('Route not found'))),
-        );
+      initialRoute: Navigationroute.mainRoute.name,
+      routes: {
+        Navigationroute.mainRoute.name: (context) => const MainScreen(),
+        Navigationroute.detailRoute.name: (context) => DetailScreen(
+          tourism: ModalRoute.of(context)?.settings.name as Tourism,
+        ),
       },
     );
   }
