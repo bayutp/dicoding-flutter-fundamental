@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Navigationroute.mainRoute.name: (context) => const MainScreen(),
         Navigationroute.detailRoute.name: (context) => DetailScreen(
-          tourism: ModalRoute.of(context)?.settings.name as Tourism,
+          tourism: ModalRoute.of(context)?.settings.arguments as Tourism,
         ),
       },
     );

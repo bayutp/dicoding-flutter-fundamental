@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:tourism_app/model/tourism.dart';
+import 'package:tourism_app/screen/detail/bookmark_icon_widget.dart';
 
-class DetailScreen extends StatefulWidget {
+class DetailScreen extends StatelessWidget {
   final Tourism tourism;
   const DetailScreen({super.key, required this.tourism});
 
   @override
-  State<DetailScreen> createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Tourism Detail')),
+      appBar: AppBar(
+        title: Text('Tourism Detail'),
+        actions: [BookmarkIconWidget(tourism: tourism)],
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
-              tag: widget.tourism.image,
+              tag: tourism.image,
               child: Image.network(
-                widget.tourism.image,
+                tourism.image,
                 height: 300,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -43,12 +42,12 @@ class _DetailScreenState extends State<DetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.tourism.name,
+                              tourism.name,
                               style: Theme.of(context).textTheme.headlineLarge,
                             ),
                             SizedBox(height: 10),
                             Text(
-                              widget.tourism.address,
+                              tourism.address,
                               style: Theme.of(context).textTheme.labelLarge
                                   ?.copyWith(fontWeight: FontWeight.w400),
                             ),
@@ -69,7 +68,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    widget.tourism.description,
+                    tourism.description,
                     textAlign: TextAlign.justify,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
