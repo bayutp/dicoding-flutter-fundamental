@@ -20,8 +20,6 @@ class Tourism {
   });
 }
 
-List<Tourism> bookmarkTourismList = [];
-
 final List<Tourism> tourismList = [
   Tourism(
     id: 1,

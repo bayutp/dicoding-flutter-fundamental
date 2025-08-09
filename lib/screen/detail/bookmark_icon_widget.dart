@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tourism_app/model/tourism.dart';
+import 'package:tourism_app/provider/detail/bookmark_icon_provider.dart';
+import 'package:tourism_app/provider/detail/bookmark_list_provider.dart';
 
 class BookmarkIconWidget extends StatefulWidget {
   final Tourism tourism;
@@ -10,20 +13,19 @@ class BookmarkIconWidget extends StatefulWidget {
 }
 
 class _BookmarkIconWidgetState extends State<BookmarkIconWidget> {
-  late bool _isBookmarked;
 
   @override
   void initState() {
-    final tourismList = bookmarkTourismList.where(
-      (tourism) => tourism.id == widget.tourism.id,
-    );
-    setState(() {
-      if (tourismList.isNotEmpty) {
-        _isBookmarked = true;
-      } else {
-        _isBookmarked = false;
-      }
+    final bookmarkListProvider = context.read<BookmarkListProvider>();
+    final bookmarkIconProvider = context.read<BookmarkIconProvider>();
+
+    Future.microtask(() {
+      final tourismList = bookmarkListProvider.checkItemBookmark(
+        widget.tourism,
+      );
+      bookmarkIconProvider.isBookmarked = tourismList;
     });
+
     super.initState();
   }
 
@@ -31,18 +33,22 @@ class _BookmarkIconWidgetState extends State<BookmarkIconWidget> {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        setState(() {
-          if (_isBookmarked) {
-            bookmarkTourismList.removeWhere(
-              (tourism) => tourism.id == widget.tourism.id,
-            );
-          } else {
-            bookmarkTourismList.add(widget.tourism);
-          }
-          _isBookmarked = !_isBookmarked;
-        });
+        final bookmarkListProvider = context.read<BookmarkListProvider>();
+        final bookmarkIconProvider = context.read<BookmarkIconProvider>();
+        final isBookmarked = bookmarkIconProvider.isBookmarked;
+
+        if (!isBookmarked) {
+          bookmarkListProvider.addBookmark(widget.tourism);
+        } else {
+          bookmarkListProvider.removeBookmark(widget.tourism);
+        }
+        bookmarkIconProvider.isBookmarked = !isBookmarked;
       },
-      icon: Icon(_isBookmarked ? Icons.bookmark : Icons.bookmark_outline),
+      icon: Icon(
+        context.watch<BookmarkIconProvider>().isBookmarked
+            ? Icons.bookmark
+            : Icons.bookmark_outline,
+      ),
     );
   }
 }
