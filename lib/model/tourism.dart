@@ -18,6 +18,19 @@ class Tourism {
     required this.like,
     required this.image,
   });
+
+  factory Tourism.fromJson(Map<String, dynamic> json) {
+    return Tourism(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      address: json['address'],
+      longitude: json['longitude'],
+      latitude: json['latitude'],
+      like: json['like'],
+      image: json['image'],
+    );
+  }
 }
 
 final List<Tourism> tourismList = [
