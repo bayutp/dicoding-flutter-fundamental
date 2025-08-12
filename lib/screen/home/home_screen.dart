@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tourism_app/model/tourism.dart';
+import 'package:tourism_app/data/model/tourism.dart';
 import 'package:tourism_app/screen/home/tourism_card_widget.dart';
 import 'package:tourism_app/static/navigation_route.dart';
 
