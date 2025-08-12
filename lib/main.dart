@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tourism_app/data/model/tourism.dart';
 import 'package:tourism_app/provider/detail/bookmark_list_provider.dart';
 import 'package:tourism_app/provider/main/index_nav_provider.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Navigationroute.mainRoute.name: (context) => const MainScreen(),
         Navigationroute.detailRoute.name: (context) => DetailScreen(
-          tourism: ModalRoute.of(context)?.settings.arguments as Tourism,
+          toursimId: ModalRoute.of(context)?.settings.arguments as int,
         ),
       },
     );
