@@ -18,7 +18,9 @@ class TourismListResponse {
       error: json['error'],
       message: json['message'],
       count: json['count'],
-      places: json['places'],
+      places: json['places'] != null
+          ? List<Tourism>.from(json['places']!.map((x) => Tourism.fromJson(x)))
+          : <Tourism>[],
     );
   }
 }
