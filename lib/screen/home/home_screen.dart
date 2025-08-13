@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tourism_app/data/api/api_service.dart';
-import 'package:tourism_app/data/model/tourism_list_response.dart';
+import 'package:provider/provider.dart';
+import 'package:tourism_app/provider/home/tourism_list_provider.dart';
 import 'package:tourism_app/screen/home/tourism_card_widget.dart';
 import 'package:tourism_app/static/navigation_route.dart';
+import 'package:tourism_app/static/tourism_list_result_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,11 +13,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Future<TourismListResponse> _futureTourismResponse;
-
   @override
   void initState() {
-    _futureTourismResponse = ApiService().getTourimList();
+    final provider = context.read<TourismListProvider>();
+    Future.microtask(() {
+      provider.fetchTourismList();
+    });
     super.initState();
   }
 
@@ -24,34 +26,33 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Tourism List')),
-      body: FutureBuilder(
-        future: _futureTourismResponse,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const Center(child: CircularProgressIndicator());
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return Center(child: Text(snapshot.error.toString()));
-              }
-              final listOfTourism = snapshot.data!.places;
-              return ListView.builder(
-                itemCount: listOfTourism.length,
-                itemBuilder: (context, index) {
-                  final tourism = listOfTourism[index];
-                  return TourismCard(
-                    tourism: tourism,
-                    onTap: () => Navigator.pushNamed(
+      body: Consumer<TourismListProvider>(
+        builder: (context, value, child) {
+          return switch (value.resultState) {
+            TourismListLoadingState() => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            TourismListLoadedState(data: var tourismList) => ListView.builder(
+              itemBuilder: (context, index) {
+                final tourism = tourismList[index];
+                return TourismCard(
+                  tourism: tourism,
+                  onTap: () {
+                    Navigator.pushNamed(
                       context,
                       Navigationroute.detailRoute.name,
                       arguments: tourism.id,
-                    ),
-                  );
-                },
-              );
-            default:
-              return const SizedBox();
-          }
+                    );
+                  },
+                );
+              },
+              itemCount: tourismList.length,
+            ),
+            TourismListErrorState(error: var message) => Center(
+              child: Text(message),
+            ),
+            _ => const SizedBox(),
+          };
         },
       ),
     );
