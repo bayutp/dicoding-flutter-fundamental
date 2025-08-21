@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tourism_app/data/api/api_service.dart';
+import 'package:tourism_app/provider/detail/restaurant_detail_provider.dart';
+import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
+import 'package:tourism_app/screen/main_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider(create: (context) => ApiService()),
+        ChangeNotifierProvider(
+          create: (context) =>
+              RestaurantListProvider(context.read<ApiService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              RestaurantDetailProvider(context.read<ApiService>()),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +35,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Scaffold(),
+      home: const MainScreen()
     );
   }
 }
