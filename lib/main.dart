@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:tourism_app/data/api/api_service.dart';
 import 'package:tourism_app/provider/detail/restaurant_detail_provider.dart';
 import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
-import 'package:tourism_app/screen/main_screen.dart';
+import 'package:tourism_app/screen/detail/detail_screen.dart';
+import 'package:tourism_app/screen/main/main_screen.dart';
+import 'package:tourism_app/static/navigation_route.dart';
 
 void main() {
   runApp(
@@ -31,11 +33,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Restaurant App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MainScreen()
+      initialRoute: NavigationRoute.mainRoute.name,
+      routes: {
+        NavigationRoute.mainRoute.name: (context) => const MainScreen(),
+        NavigationRoute.detailRoute.name: (context) =>
+            DetailScreen(id: ModalRoute.of(context)?.settings.arguments as int),
+      },
     );
   }
 }
