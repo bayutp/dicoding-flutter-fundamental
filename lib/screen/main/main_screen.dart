@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
+import 'package:tourism_app/static/navigation_route.dart';
 import 'package:tourism_app/static/restaurant_list_result_state.dart';
 
 class MainScreen extends StatefulWidget {
@@ -33,9 +34,12 @@ class _MainScreenState extends State<MainScreen> {
               ListView.builder(
                 itemBuilder: (context, index) {
                   final restaurant = restaurants[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(restaurant.name),
+                  return GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, NavigationRoute.detailRoute.name, arguments: restaurant.id),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(restaurant.name, style: TextStyle(fontSize: 16),),
+                    ),
                   );
                 },
                 itemCount: restaurants.length,
