@@ -40,6 +40,7 @@ class RestaurantDetail extends Restaurant {
         ),
       );
 
+  @override
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,

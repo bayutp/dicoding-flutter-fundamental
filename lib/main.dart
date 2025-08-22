@@ -6,6 +6,7 @@ import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
 import 'package:tourism_app/screen/main/main_screen.dart';
 import 'package:tourism_app/static/navigation_route.dart';
+import 'package:tourism_app/style/theme/restaurant_theme.dart';
 
 void main() {
   runApp(
@@ -34,14 +35,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Restaurant App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: RestaurantTheme.lightTheme,
+      darkTheme: RestaurantTheme.darkTheme,
+      themeMode: ThemeMode.system,
       initialRoute: NavigationRoute.mainRoute.name,
       routes: {
         NavigationRoute.mainRoute.name: (context) => const MainScreen(),
-        NavigationRoute.detailRoute.name: (context) =>
-            DetailScreen(id: ModalRoute.of(context)?.settings.arguments as String),
+        NavigationRoute.detailRoute.name: (context) => DetailScreen(
+          id: ModalRoute.of(context)?.settings.arguments as String,
+        ),
       },
     );
   }
