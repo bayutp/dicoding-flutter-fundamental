@@ -35,7 +35,7 @@ class _DetailScreenState extends State<DetailScreen> {
               child: CircularProgressIndicator(),
             ),
             RestaurantDetailLoadedState(data: var restaurant) => Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 32),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -43,7 +43,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     restaurant.name,
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 32),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -61,7 +61,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                       SizedBox(width: 24),
                       SizedBox(
-                        height: 50,
+                        height: 60,
                         child: VerticalDivider(
                           width: 1, // lebar area divider
                           thickness: 2, // tebal garis
@@ -71,24 +71,80 @@ class _DetailScreenState extends State<DetailScreen> {
                         ),
                       ),
                       SizedBox(width: 24),
-                      Icon(
-                        Icons.place_rounded,
-                        color: RestaurantColors.grey.colors,
-                      ),
-                      SizedBox(width: 8),
                       Expanded(
-                        // biar teks alamat gak overflow
-                        child: Text(
-                          '${restaurant.address}, ${restaurant.city}',
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(
-                                color: RestaurantColors.address.colors,
-                              ),
-                          overflow: TextOverflow
-                              .ellipsis, // kasih titik2 kalau kepanjangan
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.place_rounded,
+                                  color: RestaurantColors.grey.colors,
+                                ),
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    '${restaurant.address}, ${restaurant.city}',
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color:
+                                              RestaurantColors.address.colors,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.label_important_rounded,
+                                  color: RestaurantColors.grey.colors,
+                                ),
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    restaurant.categories
+                                        .map((item) => item.name)
+                                        .join(", "),
+                                    softWrap: true,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color: RestaurantColors.grey.colors,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox.square(dimension: 32),
+                  SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(
+                          RestaurantColors.amber.colors,
+                        ),
+                        foregroundColor: WidgetStateProperty.all(
+                          RestaurantColors.white.colors,
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        'Add Review',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.headlineLarge?.copyWith(fontSize: 16),
+                      ),
+                    ),
                   ),
                 ],
               ),
