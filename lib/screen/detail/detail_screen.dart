@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tourism_app/provider/detail/restaurant_detail_provider.dart';
+import 'package:tourism_app/screen/main/restaurant_rating_widget.dart';
 import 'package:tourism_app/static/restaurant_detail_result_state.dart';
 import 'package:tourism_app/static/restaurant_list_result_state.dart';
+import 'package:tourism_app/style/colors/restaurant_colors.dart';
 
 class DetailScreen extends StatefulWidget {
   final String id;
@@ -32,21 +34,62 @@ class _DetailScreenState extends State<DetailScreen> {
             RestaurantDetailLoadingState() => const Center(
               child: CircularProgressIndicator(),
             ),
-            RestaurantDetailLoadedState(data: var restaurant) => Center(
+            RestaurantDetailLoadedState(data: var restaurant) => Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.network(
-                    "https://restaurant-api.dicoding.dev/images/large/${restaurant.pictureId}",
-                    height: 300,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                  Text(
+                    restaurant.name,
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
-                  SizedBox(height: 16,),
-                  Text(restaurant.name),
-                  SizedBox(height: 8),
-                  Text(restaurant.city),
                   SizedBox(height: 16),
-                  Text(restaurant.description),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          RestaurantRatingWidget(rating: restaurant.rating),
+                          SizedBox.square(dimension: 10),
+                          Text(
+                            '${restaurant.customerReviews.length.toString()} Reviews',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: RestaurantColors.grey.colors),
+                          ),
+                        ],
+                      ),
+                      SizedBox(width: 24),
+                      SizedBox(
+                        height: 50,
+                        child: VerticalDivider(
+                          width: 1, // lebar area divider
+                          thickness: 2, // tebal garis
+                          color: Colors.grey[200],
+                          indent: 2,
+                          endIndent: 2,
+                        ),
+                      ),
+                      SizedBox(width: 24),
+                      Icon(
+                        Icons.place_rounded,
+                        color: RestaurantColors.grey.colors,
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        // biar teks alamat gak overflow
+                        child: Text(
+                          '${restaurant.address}, ${restaurant.city}',
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: RestaurantColors.address.colors,
+                              ),
+                          overflow: TextOverflow
+                              .ellipsis, // kasih titik2 kalau kepanjangan
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

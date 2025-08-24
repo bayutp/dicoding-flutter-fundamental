@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tourism_app/data/model/restaurant.dart';
 import 'package:tourism_app/screen/main/helper.dart';
+import 'package:tourism_app/screen/main/restaurant_rating_widget.dart';
 import 'package:tourism_app/style/colors/restaurant_colors.dart';
 
 class RestaurantItem extends StatelessWidget {
@@ -42,36 +43,7 @@ class RestaurantItem extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox.square(dimension: 8),
-                  Row(
-                    children: [
-                      Row(
-                        children: List.generate(5, (index) {
-                          double rating = restaurant.rating;
-                          if (index < rating.floor()) {
-                            return Icon(
-                              Icons.star,
-                              color: RestaurantColors.amber.colors,
-                            );
-                          } else if (index < rating && rating % 1 != 0) {
-                            return Icon(
-                              Icons.star_half,
-                              color: RestaurantColors.amber.colors,
-                            );
-                          } else {
-                            return Icon(
-                              Icons.star_border,
-                              color: RestaurantColors.amber.colors,
-                            );
-                          }
-                        }),
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        restaurant.rating.toString(),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
+                  RestaurantRatingWidget(rating: restaurant.rating),
                   SizedBox.square(dimension: 32),
                   Row(
                     children: [
