@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tourism_app/provider/detail/restaurant_detail_provider.dart';
+import 'package:tourism_app/screen/detail/menu_restaurant_widget.dart';
+import 'package:tourism_app/screen/main/helper.dart';
 import 'package:tourism_app/screen/main/restaurant_rating_widget.dart';
 import 'package:tourism_app/static/restaurant_detail_result_state.dart';
 import 'package:tourism_app/static/restaurant_list_result_state.dart';
@@ -34,81 +36,43 @@ class _DetailScreenState extends State<DetailScreen> {
             RestaurantDetailLoadingState() => const Center(
               child: CircularProgressIndicator(),
             ),
-            RestaurantDetailLoadedState(data: var restaurant) => Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    restaurant.name,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  SizedBox(height: 32),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+            RestaurantDetailLoadedState(data: var restaurant) =>
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.network(
+                      Helper.imgUrl(restaurant.pictureId, 'large'),
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox.square(dimension: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 36.0,
+                        vertical: 16,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RestaurantRatingWidget(rating: restaurant.rating),
-                          SizedBox.square(dimension: 10),
                           Text(
-                            '${restaurant.customerReviews.length.toString()} Reviews',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: RestaurantColors.grey.colors),
+                            restaurant.name,
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
-                        ],
-                      ),
-                      SizedBox(width: 24),
-                      SizedBox(
-                        height: 60,
-                        child: VerticalDivider(
-                          width: 1, // lebar area divider
-                          thickness: 2, // tebal garis
-                          color: Colors.grey[200],
-                          indent: 2,
-                          endIndent: 2,
-                        ),
-                      ),
-                      SizedBox(width: 24),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.place_rounded,
-                                  color: RestaurantColors.grey.colors,
-                                ),
-                                SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    '${restaurant.address}, ${restaurant.city}',
-                                    softWrap: true,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          color:
-                                              RestaurantColors.address.colors,
-                                        ),
+                          SizedBox(height: 24),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  RestaurantRatingWidget(
+                                    rating: restaurant.rating,
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.label_important_rounded,
-                                  color: RestaurantColors.grey.colors,
-                                ),
-                                SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    restaurant.categories
-                                        .map((item) => item.name)
-                                        .join(", "),
-                                    softWrap: true,
+                                  SizedBox.square(dimension: 10),
+                                  Text(
+                                    '${restaurant.customerReviews.length.toString()} Reviews',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium
@@ -116,39 +80,110 @@ class _DetailScreenState extends State<DetailScreen> {
                                           color: RestaurantColors.grey.colors,
                                         ),
                                   ),
+                                ],
+                              ),
+                              SizedBox(width: 24),
+                              SizedBox(
+                                height: 60,
+                                child: VerticalDivider(
+                                  width: 1, // lebar area divider
+                                  thickness: 2, // tebal garis
+                                  color: Colors.grey[200],
+                                  indent: 2,
+                                  endIndent: 2,
                                 ),
-                              ],
+                              ),
+                              SizedBox(width: 24),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.place_rounded,
+                                          color: RestaurantColors.grey.colors,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            '${restaurant.address}, ${restaurant.city}',
+                                            softWrap: true,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color: RestaurantColors
+                                                      .address
+                                                      .colors,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.label_important_rounded,
+                                          color: RestaurantColors.grey.colors,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Expanded(
+                                          child: Text(
+                                            restaurant.categories
+                                                .map((item) => item.name)
+                                                .join(", "),
+                                            softWrap: true,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                  color: RestaurantColors
+                                                      .grey
+                                                      .colors,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox.square(dimension: 24),
+                          SizedBox(
+                            height: 50,
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all(
+                                  RestaurantColors.amber.colors,
+                                ),
+                                foregroundColor: WidgetStateProperty.all(
+                                  RestaurantColors.white.colors,
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: Text(
+                                'Add Review',
+                                style: Theme.of(context).textTheme.headlineLarge
+                                    ?.copyWith(fontSize: 16),
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox.square(dimension: 32),
-                  SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all(
-                          RestaurantColors.amber.colors,
-                        ),
-                        foregroundColor: WidgetStateProperty.all(
-                          RestaurantColors.white.colors,
-                        ),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        'Add Review',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.headlineLarge?.copyWith(fontSize: 16),
+                          ),
+                          SizedBox.square(dimension: 32),
+                          Text(
+                            restaurant.description,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          SizedBox.square(dimension: 32),
+                          MenuRestaurantWidget(restaurant: restaurant),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
             RestaurantListErrorState(error: var message) => Center(
               child: Text(message),
             ),
