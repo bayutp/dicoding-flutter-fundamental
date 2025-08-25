@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tourism_app/data/api/api_service.dart';
 import 'package:tourism_app/provider/detail/restaurant_detail_provider.dart';
 import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
+import 'package:tourism_app/provider/home/search_restaurant_provider.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
 import 'package:tourism_app/screen/main/main_screen.dart';
 import 'package:tourism_app/static/navigation_route.dart';
@@ -20,6 +21,10 @@ void main() {
         ChangeNotifierProvider(
           create: (context) =>
               RestaurantDetailProvider(context.read<ApiService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              SearchRestaurantProvider(context.read<ApiService>()),
         ),
       ],
       child: const MyApp(),

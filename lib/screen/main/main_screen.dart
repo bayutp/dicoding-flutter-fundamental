@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
+import 'package:tourism_app/provider/home/search_restaurant_provider.dart';
 import 'package:tourism_app/screen/main/restaurant_item.dart';
 import 'package:tourism_app/static/navigation_route.dart';
-import 'package:tourism_app/static/restaurant_list_result_state.dart';
+import 'package:tourism_app/static/search_restaurant_state.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,23 +15,26 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
-    final provider = context.read<RestaurantListProvider>();
+    // final provider = context.read<RestaurantListProvider>();
+    final searchProvider = context.read<SearchRestaurantProvider>();
     Future.microtask(() {
-      provider.fetchRestaurantList();
+      // provider.fetchRestaurantList();
+      searchProvider.searchRestaurants('');
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    String qurey = "";
     return Scaffold(
-      body: Consumer<RestaurantListProvider>(
+      body: Consumer<SearchRestaurantProvider>(
         builder: (context, value, child) {
           return switch (value.resultState) {
-            RestaurantListLoadingState() => const Center(
+            SearchRestaurantLoadingState() => const Center(
               child: CircularProgressIndicator(),
             ),
-            RestaurantListLoadedState(data: var restaurants) => Padding(
+            SearchRestaurantLoadedState(data: var restaurants) => Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,10 +57,18 @@ class _MainScreenState extends State<MainScreen> {
                         borderSide: BorderSide.none, // hilangin border garis
                       ),
                     ),
+                    onSubmitted: (value) {
+                      qurey = value;
+                      final searchProvider = context
+                          .read<SearchRestaurantProvider>();
+                      Future.microtask(() {
+                        searchProvider.searchRestaurants(qurey);
+                      });
+                    },
                   ),
                   SizedBox.square(dimension: 32),
                   Text(
-                    'Recomended',
+                    qurey.isEmpty ? 'Recomended' : 'Search for \'$qurey\'',
                     style: Theme.of(
                       context,
                     ).textTheme.headlineLarge?.copyWith(fontSize: 24),
@@ -85,7 +96,7 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               ),
             ),
-            RestaurantListErrorState(error: var message) => Center(
+            SearchRestaurantErrorState(error: var message) => Center(
               child: Text(message),
             ),
             _ => SizedBox(),
