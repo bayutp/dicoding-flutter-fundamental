@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tourism_app/provider/main/index_nav_provider.dart';
 import 'package:tourism_app/screen/home/home_screen.dart';
+import 'package:tourism_app/screen/search/search_screen.dart';
 import 'package:tourism_app/screen/theme/theme_screen.dart';
 
 class MainScreen extends StatelessWidget {
@@ -14,6 +15,7 @@ class MainScreen extends StatelessWidget {
         builder: (context, value, child) {
           return switch (value.indexBottomNav) {
             0 => HomeScreen(),
+            1 => SearchScreen(),
             _ => ThemeScreen(),
           };
         },
@@ -28,6 +30,11 @@ class MainScreen extends StatelessWidget {
             icon: Icon(Icons.home_rounded),
             label: 'Home',
             tooltip: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search_rounded),
+            label: 'Search',
+            tooltip: 'Search',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.wb_sunny),

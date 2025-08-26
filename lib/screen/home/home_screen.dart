@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tourism_app/provider/home/search_restaurant_provider.dart';
+import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
 import 'package:tourism_app/screen/home/restaurant_item.dart';
 import 'package:tourism_app/static/navigation_route.dart';
-import 'package:tourism_app/static/search_restaurant_state.dart';
+import 'package:tourism_app/static/restaurant_list_result_state.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,60 +15,29 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    // final provider = context.read<RestaurantListProvider>();
-    final searchProvider = context.read<SearchRestaurantProvider>();
+    final provider = context.read<RestaurantListProvider>();
     Future.microtask(() {
-      // provider.fetchRestaurantList();
-      searchProvider.searchRestaurants('');
+      provider.fetchRestaurantList();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    String qurey = "";
     return Scaffold(
-      body: Consumer<SearchRestaurantProvider>(
+      body: Consumer<RestaurantListProvider>(
         builder: (context, value, child) {
           return switch (value.resultState) {
-            SearchRestaurantLoadingState() => const Center(
+            RestaurantListLoadingState() => const Center(
               child: CircularProgressIndicator(),
             ),
-            SearchRestaurantLoadedState(data: var restaurants) => Padding(
+            RestaurantListLoadedState(data: var restaurants) => Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Find the best restaurants near you...',
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  SizedBox.square(dimension: 16),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: "Search",
-                      filled: true,
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 20,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30), // radius bulat
-                        borderSide: BorderSide.none, // hilangin border garis
-                      ),
-                    ),
-                    onSubmitted: (value) {
-                      qurey = value;
-                      final searchProvider = context
-                          .read<SearchRestaurantProvider>();
-                      Future.microtask(() {
-                        searchProvider.searchRestaurants(qurey);
-                      });
-                    },
-                  ),
-                  SizedBox.square(dimension: 32),
-                  Text(
-                    qurey.isEmpty ? 'Recomended' : 'Search for \'$qurey\'',
+                    'Recomended Restaurant',
                     style: Theme.of(
                       context,
                     ).textTheme.headlineLarge?.copyWith(fontSize: 24),
@@ -96,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            SearchRestaurantErrorState(error: var message) => Center(
+            RestaurantListErrorState(error: var message) => Center(
               child: Text(message),
             ),
             _ => SizedBox(),
