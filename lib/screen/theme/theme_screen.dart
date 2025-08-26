@@ -12,12 +12,14 @@ class ThemeScreen extends StatefulWidget {
 class _ThemeScreenState extends State<ThemeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Switch(
-        value: context.watch<ThemeProvider>().isDark,
-        onChanged: (value) {
-          context.read<ThemeProvider>().setDarkMode = value;
-        },
+    return Scaffold(
+      body: Center(
+        child: Switch(
+          value: context.watch<ThemeProvider>().isDark,
+          onChanged: (value) {
+            context.read<ThemeProvider>().setDarkMode = value;
+          },
+        ),
       ),
     );
   }
