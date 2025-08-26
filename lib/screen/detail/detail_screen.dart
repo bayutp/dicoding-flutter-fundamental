@@ -4,6 +4,7 @@ import 'package:tourism_app/provider/detail/restaurant_detail_provider.dart';
 import 'package:tourism_app/screen/detail/menu_restaurant_widget.dart';
 import 'package:tourism_app/screen/main/helper.dart';
 import 'package:tourism_app/screen/main/restaurant_rating_widget.dart';
+import 'package:tourism_app/static/navigation_route.dart';
 import 'package:tourism_app/static/restaurant_detail_result_state.dart';
 import 'package:tourism_app/static/restaurant_list_result_state.dart';
 import 'package:tourism_app/style/colors/restaurant_colors.dart';
@@ -152,7 +153,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           ),
                           SizedBox.square(dimension: 24),
                           SizedBox(
-                            height: 50,
+                            height: 48,
                             width: double.infinity,
                             child: ElevatedButton(
                               style: ButtonStyle(
@@ -163,7 +164,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                   RestaurantColors.white.colors,
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  NavigationRoute.reviewRoute.name,
+                                  arguments: restaurant,
+                                );
+                              },
                               child: Text(
                                 'Add Review',
                                 style: Theme.of(context).textTheme.headlineLarge

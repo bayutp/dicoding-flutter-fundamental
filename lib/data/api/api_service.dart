@@ -37,4 +37,6 @@ class ApiService {
       throw Exception('Failed to search restaurant');
     }
   }
+
+  // Add review
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tourism_app/data/api/api_service.dart';
+import 'package:tourism_app/data/model/restaurant_detail.dart';
 import 'package:tourism_app/provider/detail/restaurant_detail_provider.dart';
 import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
 import 'package:tourism_app/provider/home/search_restaurant_provider.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
 import 'package:tourism_app/screen/main/main_screen.dart';
+import 'package:tourism_app/screen/review/review_screen.dart';
 import 'package:tourism_app/static/navigation_route.dart';
 import 'package:tourism_app/style/theme/restaurant_theme.dart';
 
@@ -48,6 +50,10 @@ class MyApp extends StatelessWidget {
         NavigationRoute.mainRoute.name: (context) => const MainScreen(),
         NavigationRoute.detailRoute.name: (context) => DetailScreen(
           id: ModalRoute.of(context)?.settings.arguments as String,
+        ),
+        NavigationRoute.reviewRoute.name: (context) => ReviewScreen(
+          restaurant:
+              ModalRoute.of(context)?.settings.arguments as RestaurantDetail,
         ),
       },
     );
