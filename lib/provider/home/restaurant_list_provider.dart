@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tourism_app/data/api/api_service.dart';
 import 'package:tourism_app/static/restaurant_list_result_state.dart';
 
