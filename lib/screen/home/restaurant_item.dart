@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tourism_app/data/model/restaurant.dart';
-import 'package:tourism_app/screen/main/helper.dart';
-import 'package:tourism_app/screen/main/restaurant_rating_widget.dart';
+import 'package:tourism_app/screen/home/helper.dart';
+import 'package:tourism_app/screen/home/restaurant_rating_widget.dart';
 import 'package:tourism_app/style/colors/restaurant_colors.dart';
 
 class RestaurantItem extends StatelessWidget {
