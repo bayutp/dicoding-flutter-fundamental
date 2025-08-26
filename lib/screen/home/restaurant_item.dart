@@ -26,9 +26,12 @@ class RestaurantItem extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadiusGeometry.circular(16),
-                child: Image.network(
-                  Helper.imgUrl(restaurant.pictureId, 'medium'),
-                  fit: BoxFit.cover,
+                child: Hero(
+                  tag: restaurant.id,
+                  child: Image.network(
+                    Helper.imgUrl(restaurant.pictureId, 'medium'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -40,11 +43,13 @@ class RestaurantItem extends StatelessWidget {
                 children: [
                   Text(
                     restaurant.name,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleLarge?.copyWith(fontSize: 20),
                   ),
                   SizedBox.square(dimension: 8),
                   RestaurantRatingWidget(rating: restaurant.rating),
-                  SizedBox.square(dimension: 32),
+                  SizedBox.square(dimension: 16),
                   Row(
                     children: [
                       Icon(

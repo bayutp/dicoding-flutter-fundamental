@@ -40,7 +40,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     Text(
                       'Find the best restaurants near you...',
-                      style: Theme.of(context).textTheme.headlineLarge,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.headlineLarge?.copyWith(fontSize: 28),
                     ),
                     SizedBox.square(dimension: 16),
                     TextField(
@@ -52,7 +54,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           vertical: 20,
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30), // radius bulat
+                          borderRadius: BorderRadius.circular(
+                            30,
+                          ), // radius bulat
                           borderSide: BorderSide.none, // hilangin border garis
                         ),
                       ),
@@ -60,11 +64,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         qurey = value;
                         final searchProvider = context
                             .read<SearchRestaurantProvider>();
-                        if (qurey.isNotEmpty) {
-                          Future.microtask(() {
-                            searchProvider.searchRestaurants(qurey);
-                          });
-                        }
+                        Future.microtask(() {
+                          searchProvider.searchRestaurants(qurey);
+                        });
                       },
                     ),
                     SizedBox.square(dimension: 32),

@@ -47,9 +47,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
 
             _nameController.clear();
             _reviewController.clear();
-            _provider.resetState();
 
             _detailProvider.getRestaurantDetail(widget.restaurant.id);
+            _provider.resetState();
           } else if (value.resultState is CustomerReviewErrorState) {
             final errorMessage =
                 (value.resultState as CustomerReviewErrorState).error;

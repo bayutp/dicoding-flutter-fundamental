@@ -42,11 +42,14 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.network(
-                      Helper.imgUrl(restaurant.pictureId, 'large'),
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      fit: BoxFit.cover,
+                    Hero(
+                      tag: restaurant.id,
+                      child: Image.network(
+                        Helper.imgUrl(restaurant.pictureId, 'large'),
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     SizedBox.square(dimension: 16),
                     Padding(
@@ -185,6 +188,48 @@ class _DetailScreenState extends State<DetailScreen> {
                           ),
                           SizedBox.square(dimension: 32),
                           MenuRestaurantWidget(restaurant: restaurant),
+                          SizedBox.square(dimension: 32),
+                          Text(
+                            'Customer Review',
+                            style: Theme.of(
+                              context,
+                            ).textTheme.headlineLarge?.copyWith(fontSize: 24),
+                          ),
+                          SizedBox.square(dimension: 16),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            reverse: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: restaurant.customerReviews.length,
+                            itemBuilder: (context, index) {
+                              final item = restaurant.customerReviews[index];
+                              return Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadiusGeometry.circular(
+                                    30,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0,
+                                  ),
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      radius: 30,
+                                      backgroundColor:
+                                          RestaurantColors.grey.colors,
+                                      child: Icon(
+                                        Icons.person_2_rounded,
+                                        color: RestaurantColors.white.colors,
+                                      ),
+                                    ),
+                                    title: Text('${item.name}\n${item.review}'),
+                                    trailing: const Icon(Icons.more_horiz),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ),
