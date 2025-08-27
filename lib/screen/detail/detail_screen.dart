@@ -6,7 +6,6 @@ import 'package:tourism_app/static/helper.dart';
 import 'package:tourism_app/screen/home/restaurant_rating_widget.dart';
 import 'package:tourism_app/static/navigation_route.dart';
 import 'package:tourism_app/static/restaurant_detail_result_state.dart';
-import 'package:tourism_app/static/restaurant_list_result_state.dart';
 import 'package:tourism_app/style/colors/restaurant_colors.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -236,7 +235,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   ],
                 ),
               ),
-            RestaurantListErrorState(error: var message) => Center(
+            RestaurantDetailErrorState(error: var message) => Center(
               child: Text(message),
             ),
             _ => SizedBox(),
