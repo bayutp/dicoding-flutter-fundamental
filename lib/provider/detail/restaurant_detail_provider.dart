@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart';
 import 'package:tourism_app/data/api/api_service.dart';
+import 'package:tourism_app/static/helper.dart';
 import 'package:tourism_app/static/restaurant_detail_result_state.dart';
 
 class RestaurantDetailProvider extends ChangeNotifier {
@@ -20,8 +24,14 @@ class RestaurantDetailProvider extends ChangeNotifier {
       } else {
         _emit(RestaurantDetailLoadedState(result.restaurant));
       }
-    } on Exception catch (e) {
-      _emit(RestaurantDetailErrorState(e.toString()));
+    } on ClientException catch (_) {
+      _emit(RestaurantDetailErrorState(Helper.errServer));
+    } on SocketException catch (_) {
+      _emit(RestaurantDetailErrorState(Helper.errInet));
+    } on FormatException catch (_) {
+      _emit(RestaurantDetailErrorState(Helper.errFmt));
+    } catch (e) {
+      _emit(RestaurantDetailErrorState(Helper.errMsg));
     }
   }
 
