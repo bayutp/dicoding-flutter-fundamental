@@ -12,7 +12,16 @@ class MenuRestaurantWidget extends StatefulWidget {
 }
 
 class _MenuRestaurantWidgetState extends State<MenuRestaurantWidget> {
-  String selectedCategory = "foods";
+  late String selectedCategory;
+
+  @override
+  void initState() {
+    CategoryProvider provider = context.read<CategoryProvider>();
+    provider.setCategory = "foods";
+    selectedCategory = provider.selectedCategory;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<CategoryProvider>();

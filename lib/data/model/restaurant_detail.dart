@@ -39,20 +39,4 @@ class RestaurantDetail extends Restaurant {
           json["customerReviews"].map((x) => CustomerReview.fromJson(x)),
         ),
       );
-
-  @override
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "description": description,
-    "city": city,
-    "address": address,
-    "pictureId": pictureId,
-    "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
-    "menus": menus.toJson(),
-    "rating": rating,
-    "customerReviews": List<dynamic>.from(
-      customerReviews.map((x) => x.toJson()),
-    ),
-  };
 }

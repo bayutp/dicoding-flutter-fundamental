@@ -17,10 +17,4 @@ class RestaurantDetailResponse {
         message: json["message"],
         restaurant: RestaurantDetail.fromJson(json["restaurant"]),
       );
-
-  Map<String, dynamic> toJson() => {
-    "error": error,
-    "message": message,
-    "restaurant": restaurant.toJson(),
-  };
 }
