@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class RestaurantTextStyle {
   static const TextStyle _commonStyle = TextStyle(fontFamily: 'Inter');
 
-   static TextStyle displayLarge = _commonStyle.copyWith(
+  static TextStyle displayLarge = _commonStyle.copyWith(
     fontSize: 57,
     fontWeight: FontWeight.w700,
     height: 1.11,

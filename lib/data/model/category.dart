@@ -7,5 +7,4 @@ class Category {
       Category(name: json["name"]);
 
   Map<String, dynamic> toJson() => {"name": name};
-  
 }

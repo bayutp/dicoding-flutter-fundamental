@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tourism_app/data/api/api_service.dart';
 import 'package:tourism_app/data/model/restaurant_detail.dart';
+import 'package:tourism_app/provider/detail/category_provider.dart';
 import 'package:tourism_app/provider/detail/restaurant_detail_provider.dart';
 import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
 import 'package:tourism_app/provider/home/search_restaurant_provider.dart';
@@ -37,6 +38,7 @@ void main() {
               CustomerReviewProvider(context.read<ApiService>()),
         ),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => CategoryProvider()),
       ],
       child: const MyApp(),
     ),
@@ -55,9 +57,7 @@ class MyApp extends StatelessWidget {
           title: 'Restaurant App',
           theme: RestaurantTheme.lightTheme,
           darkTheme: RestaurantTheme.darkTheme,
-          themeMode: value.isDark
-              ? ThemeMode.dark
-              : ThemeMode.light,
+          themeMode: value.isDark ? ThemeMode.dark : ThemeMode.light,
           initialRoute: NavigationRoute.mainRoute.name,
           routes: {
             NavigationRoute.mainRoute.name: (context) => const MainScreen(),
