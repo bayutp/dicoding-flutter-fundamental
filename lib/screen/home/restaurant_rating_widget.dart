@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tourism_app/style/colors/restaurant_colors.dart';
 
 class RestaurantRatingWidget extends StatelessWidget {
-  final double rating;
+  final num rating;
   const RestaurantRatingWidget({super.key, required this.rating});
 
   @override

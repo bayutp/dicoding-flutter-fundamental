@@ -53,9 +53,11 @@ class MyApp extends StatelessWidget {
       builder: (context, value, child) {
         return MaterialApp(
           title: 'Restaurant App',
-          theme: value.isDark
-              ? RestaurantTheme.darkTheme
-              : RestaurantTheme.lightTheme,
+          theme: RestaurantTheme.lightTheme,
+          darkTheme: RestaurantTheme.darkTheme,
+          themeMode: value.isDark
+              ? ThemeMode.dark
+              : ThemeMode.light,
           initialRoute: NavigationRoute.mainRoute.name,
           routes: {
             NavigationRoute.mainRoute.name: (context) => const MainScreen(),
