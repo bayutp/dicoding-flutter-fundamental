@@ -14,7 +14,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     final provider = context.read<ThemeProvider>();
     Future.microtask(() {
       provider.getTheme();
