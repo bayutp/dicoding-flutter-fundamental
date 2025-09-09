@@ -15,11 +15,12 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
+    super.initState();
+   
     final provider = context.read<SearchRestaurantProvider>();
     Future.microtask(() {
       provider.searchRestaurants('');
     });
-    super.initState();
   }
 
   @override

@@ -23,9 +23,10 @@ class _ReviewScreenState extends State<ReviewScreen> {
 
   @override
   void initState() {
+    super.initState();
+    
     _provider = context.read<CustomerReviewProvider>();
     _detailProvider = context.read<RestaurantDetailProvider>();
-    super.initState();
   }
 
   @override

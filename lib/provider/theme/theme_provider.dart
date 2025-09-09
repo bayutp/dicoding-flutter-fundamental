@@ -16,6 +16,7 @@ class ThemeProvider extends ChangeNotifier {
   Future<void> setTheme(SettingTheme theme) async {
     try {
       await _service.setTheme(theme);
+      _settingTheme = theme;
       _messaage = "New theme applied";
     } catch (e) {
       _messaage = "Failed to change theme";
@@ -26,7 +27,6 @@ class ThemeProvider extends ChangeNotifier {
   void getTheme() async {
     try {
       _settingTheme = _service.getTheme();
-      _messaage = "Theme loaded successfully";
     } catch (e) {
       _messaage = "Failed to retrieve current theme";
     }

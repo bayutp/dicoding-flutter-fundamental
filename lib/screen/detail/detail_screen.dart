@@ -19,11 +19,12 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
+    super.initState();
+    
     final provider = context.read<RestaurantDetailProvider>();
     Future.microtask(() {
       provider.getRestaurantDetail(widget.id);
     });
-    super.initState();
   }
 
   @override

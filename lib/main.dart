@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tourism_app/data/api/api_service.dart';
 import 'package:tourism_app/data/model/restaurant_detail.dart';
 import 'package:tourism_app/provider/detail/category_provider.dart';
@@ -12,14 +13,18 @@ import 'package:tourism_app/provider/theme/theme_provider.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
 import 'package:tourism_app/screen/main/main_screen.dart';
 import 'package:tourism_app/screen/review/review_screen.dart';
+import 'package:tourism_app/service/shared_preferences_service.dart';
 import 'package:tourism_app/static/navigation_route.dart';
 import 'package:tourism_app/style/theme/restaurant_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
   runApp(
     MultiProvider(
       providers: [
         Provider(create: (context) => ApiService()),
+        Provider(create: (context) => SharedPreferencesService(prefs)),
         ChangeNotifierProvider(create: (context) => IndexNavProvider()),
         ChangeNotifierProvider(
           create: (context) =>
@@ -37,7 +42,10 @@ void main() {
           create: (context) =>
               CustomerReviewProvider(context.read<ApiService>()),
         ),
-        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(
+          create: (context) =>
+              ThemeProvider(context.read<SharedPreferencesService>()),
+        ),
         ChangeNotifierProvider(create: (context) => CategoryProvider()),
       ],
       child: const MyApp(),
@@ -45,9 +53,23 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    final provider = context.read<ThemeProvider>();
+    Future.microtask((){
+      provider.getTheme();
+    });
+    super.initState();
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -57,7 +79,7 @@ class MyApp extends StatelessWidget {
           title: 'Restaurant App',
           theme: RestaurantTheme.lightTheme,
           darkTheme: RestaurantTheme.darkTheme,
-          themeMode: value.isDark ? ThemeMode.dark : ThemeMode.light,
+          themeMode: value.settingTheme!.isDark ? ThemeMode.dark : ThemeMode.light,
           initialRoute: NavigationRoute.mainRoute.name,
           routes: {
             NavigationRoute.mainRoute.name: (context) => const MainScreen(),

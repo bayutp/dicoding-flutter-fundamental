@@ -15,11 +15,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
+    super.initState();
+    
     final provider = context.read<RestaurantListProvider>();
     Future.microtask(() {
       provider.fetchRestaurantList();
     });
-    super.initState();
   }
 
   @override
