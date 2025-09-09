@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tourism_app/provider/detail/favorites_icon_provider.dart';
 import 'package:tourism_app/provider/detail/restaurant_detail_provider.dart';
+import 'package:tourism_app/screen/detail/favorites_icon_widget.dart';
 import 'package:tourism_app/screen/detail/menu_restaurant_widget.dart';
 import 'package:tourism_app/static/helper.dart';
 import 'package:tourism_app/screen/home/restaurant_rating_widget.dart';
@@ -70,7 +72,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                 ).textTheme.headlineLarge,
                               ),
                               SizedBox(width: 8),
-                              Icon(Icons.favorite_border),
+                              ChangeNotifierProvider(
+                                create: (context) => FavoritesIconProvider(),
+                                child: FavoritesIconWidget(
+                                  restaurant: restaurant,
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 24),
