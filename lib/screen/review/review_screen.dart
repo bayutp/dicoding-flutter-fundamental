@@ -71,16 +71,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Form Review',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.headlineLarge?.copyWith(fontSize: 24),
-                  ),
-                  SizedBox.square(dimension: 16),
                   TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(
