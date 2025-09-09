@@ -8,7 +8,7 @@ class LocalDatabaseService {
 
   Future<void> createTables(Database database) async {
     await database.execute("""CREATE TABLE $_tableName(
-        id INTEGER PRIMARY KEY,
+        id TEXT PRIMARY KEY,
         name TEXT,
         description TEXT,
         pictureId TEXT,
@@ -48,7 +48,7 @@ class LocalDatabaseService {
     return results.map((result) => Restaurant.fromJson(result)).toList();
   }
 
-  Future<Restaurant?> getItemById(int id) async {
+  Future<Restaurant?> getItemById(String id) async {
     final db = await _initializeDb();
     final results = await db.query(
       _tableName,
@@ -60,7 +60,7 @@ class LocalDatabaseService {
     return results.isEmpty ? null : Restaurant.fromJson(results.first);
   }
 
-  Future<int> removeItem(int id) async {
+  Future<int> removeItem(String id) async {
     final db = await _initializeDb();
     final result = await db.delete(
       _tableName,
