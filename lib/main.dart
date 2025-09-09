@@ -10,11 +10,13 @@ import 'package:tourism_app/provider/favorites/local_db_provider.dart';
 import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
 import 'package:tourism_app/provider/home/search_restaurant_provider.dart';
 import 'package:tourism_app/provider/main/index_nav_provider.dart';
+import 'package:tourism_app/provider/notifications/local_notification_provider.dart';
 import 'package:tourism_app/provider/review/customer_review_provider.dart';
 import 'package:tourism_app/provider/theme/theme_provider.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
 import 'package:tourism_app/screen/main/main_screen.dart';
 import 'package:tourism_app/screen/review/review_screen.dart';
+import 'package:tourism_app/service/local_notifications_service.dart';
 import 'package:tourism_app/service/shared_preferences_service.dart';
 import 'package:tourism_app/static/navigation_route.dart';
 import 'package:tourism_app/style/theme/restaurant_theme.dart';
@@ -28,6 +30,7 @@ void main() async {
         Provider(create: (context) => ApiService()),
         Provider(create: (context) => SharedPreferencesService(prefs)),
         Provider(create: (context) => LocalDatabaseService()),
+        Provider(create: (context) => LocalNotificationsService()..init()),
         ChangeNotifierProvider(create: (context) => IndexNavProvider()),
         ChangeNotifierProvider(
           create: (context) =>
@@ -53,6 +56,11 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) =>
               LocalDbProvider(context.read<LocalDatabaseService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LocalNotificationProvider(
+            context.read<LocalNotificationsService>(),
+          )..requestPermissions(),
         ),
       ],
       child: const MyApp(),
