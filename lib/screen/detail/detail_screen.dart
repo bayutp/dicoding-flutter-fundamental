@@ -20,7 +20,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     final provider = context.read<RestaurantDetailProvider>();
     Future.microtask(() {
       provider.getRestaurantDetail(widget.id);
@@ -60,9 +60,18 @@ class _DetailScreenState extends State<DetailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            restaurant.name,
-                            style: Theme.of(context).textTheme.headlineLarge,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                restaurant.name,
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.headlineLarge,
+                              ),
+                              SizedBox(width: 8),
+                              Icon(Icons.favorite_border),
+                            ],
                           ),
                           SizedBox(height: 24),
                           Row(
