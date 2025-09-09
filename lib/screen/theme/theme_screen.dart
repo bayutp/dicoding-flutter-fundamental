@@ -14,11 +14,19 @@ class _ThemeScreenState extends State<ThemeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Switch(
-          value: context.watch<ThemeProvider>().isDark,
-          onChanged: (value) {
-            context.read<ThemeProvider>().setDarkMode = value;
-          },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Dark Mode', style: Theme.of(context).textTheme.bodyMedium),
+            SizedBox(width: 16),
+            Switch(
+              value: context.watch<ThemeProvider>().isDark,
+              onChanged: (value) {
+                context.read<ThemeProvider>().setDarkMode = value;
+              },
+            ),
+          ],
         ),
       ),
     );
