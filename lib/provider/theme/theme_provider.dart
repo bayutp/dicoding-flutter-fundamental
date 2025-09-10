@@ -17,7 +17,9 @@ class ThemeProvider extends ChangeNotifier {
     try {
       await _service.setTheme(theme);
       _settingTheme = theme;
-      _messaage = _settingTheme!.isDark ? "Dark theme applied" : "Light theme applied";
+      _messaage = _settingTheme!.isDark
+          ? "Dark theme applied"
+          : "Light theme applied";
     } catch (e) {
       _messaage = "Failed to change theme";
     }

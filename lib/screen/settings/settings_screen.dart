@@ -4,7 +4,10 @@ import 'package:tourism_app/data/model/setting_notification.dart';
 import 'package:tourism_app/data/model/setting_theme.dart';
 import 'package:tourism_app/provider/notifications/local_notification_provider.dart';
 import 'package:tourism_app/provider/notifications/notification_provider.dart';
+import 'package:tourism_app/provider/notifications/payload_provider.dart';
 import 'package:tourism_app/provider/theme/theme_provider.dart';
+import 'package:tourism_app/service/local_notifications_service.dart';
+import 'package:tourism_app/static/navigation_route.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -21,6 +24,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final provider = context.read<ThemeProvider>();
     final localNotifProvider = context.read<LocalNotificationProvider>();
     final notifProvider = context.read<NotificationProvider>();
+
+    _configureSelectNotificationSubject();
 
     Future.microtask(() {
       provider.getTheme();
@@ -50,6 +55,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         }
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    selectNotificationStream.close();
   }
 
   @override
@@ -116,5 +127,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _showNotification() async {
     context.read<LocalNotificationProvider>().showNotifications();
+  }
+
+  void _configureSelectNotificationSubject() {
+    selectNotificationStream.stream.listen((String? payload) {
+      if (mounted) {
+        context.read<PayloadProvider>().payload = payload;
+        Navigator.pushNamed(
+          context,
+          NavigationRoute.detailRoute.name,
+          arguments: payload,
+        );
+      }
+    });
   }
 }

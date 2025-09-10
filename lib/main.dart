@@ -12,6 +12,7 @@ import 'package:tourism_app/provider/home/search_restaurant_provider.dart';
 import 'package:tourism_app/provider/main/index_nav_provider.dart';
 import 'package:tourism_app/provider/notifications/local_notification_provider.dart';
 import 'package:tourism_app/provider/notifications/notification_provider.dart';
+import 'package:tourism_app/provider/notifications/payload_provider.dart';
 import 'package:tourism_app/provider/review/customer_review_provider.dart';
 import 'package:tourism_app/provider/theme/theme_provider.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
@@ -24,7 +25,19 @@ import 'package:tourism_app/style/theme/restaurant_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final notificationAppLaunchDetails = await flutterLocalNotificationsPlugin
+      .getNotificationAppLaunchDetails();
   final prefs = await SharedPreferences.getInstance();
+  String route = NavigationRoute.mainRoute.name;
+  String? payload;
+
+  if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+    final notificationResponse =
+        notificationAppLaunchDetails?.notificationResponse;
+    route = NavigationRoute.detailRoute.name;
+    payload = notificationResponse?.payload;
+  }
+
   runApp(
     MultiProvider(
       providers: [
@@ -67,14 +80,18 @@ void main() async {
           create: (context) =>
               NotificationProvider(context.read<SharedPreferencesService>()),
         ),
+        ChangeNotifierProvider(
+          create: (context) => PayloadProvider(payload: payload),
+        ),
       ],
-      child: const MyApp(),
+      child: MyApp(initialRoute: route),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+  const MyApp({super.key, required this.initialRoute});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -102,7 +119,7 @@ class _MyAppState extends State<MyApp> {
           themeMode: value.settingTheme!.isDark
               ? ThemeMode.dark
               : ThemeMode.light,
-          initialRoute: NavigationRoute.mainRoute.name,
+          initialRoute: widget.initialRoute,
           routes: {
             NavigationRoute.mainRoute.name: (context) => const MainScreen(),
             NavigationRoute.detailRoute.name: (context) => DetailScreen(

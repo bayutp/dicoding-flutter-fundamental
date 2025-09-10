@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+
+final StreamController<String?> selectNotificationStream =
+    StreamController<String?>.broadcast();
 
 class LocalNotificationsService {
   Future<void> init() async {
@@ -21,7 +26,15 @@ class LocalNotificationsService {
       iOS: initializationSettingsDarwin,
     );
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (notificationResponse) {
+        final payload = notificationResponse.payload;
+        if (payload != null && payload.isNotEmpty) {
+          selectNotificationStream.add(payload);
+        }
+      },
+    );
   }
 
   Future<bool> _isAndroidPermissionGranted() async {

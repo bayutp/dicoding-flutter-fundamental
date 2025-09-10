@@ -21,7 +21,7 @@ class LocalNotificationProvider extends ChangeNotifier {
       id: _notificationId,
       title: "New Notification",
       body: "This is a new notification with id $_notificationId",
-      payload: "This is a payload from notification with id $_notificationId",
+      payload: "rqdv5juczeskfw1e867",
     );
   }
 }

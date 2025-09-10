@@ -9,10 +9,10 @@ class NotificationProvider extends ChangeNotifier {
 
   String _messaage = "";
   String get message => _messaage;
-  
+
   SettingNotification? _settingNotification;
   SettingNotification? get settingNotification => _settingNotification;
-  
+
   Future<void> setNotificationEnabled(SettingNotification notification) async {
     try {
       await _service.setNotificationEnabled(notification);
@@ -26,7 +26,6 @@ class NotificationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  
   void isNotificationEnabled() async {
     try {
       _settingNotification = _service.isNotificationEnabled();
