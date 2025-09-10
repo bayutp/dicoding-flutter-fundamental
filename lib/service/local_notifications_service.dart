@@ -171,15 +171,15 @@ class LocalNotificationsService {
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
+  }
 
-    Future<List<PendingNotificationRequest>> pendingNotifRequests() async {
-      final List<PendingNotificationRequest> pendingNotifRequests =
-          await flutterLocalNotificationsPlugin.pendingNotificationRequests();
-      return pendingNotifRequests;
-    }
+  Future<List<PendingNotificationRequest>> pendingNotifRequests() async {
+    final List<PendingNotificationRequest> pendingNotifRequests =
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    return pendingNotifRequests;
+  }
 
-    Future<void> cancelNotification(int id) async {
-      await flutterLocalNotificationsPlugin.cancel(id);
-    }
+  Future<void> cancelNotification(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 }
