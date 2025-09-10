@@ -4,7 +4,7 @@ import 'package:tourism_app/provider/main/index_nav_provider.dart';
 import 'package:tourism_app/screen/favorites/favorites_screen.dart';
 import 'package:tourism_app/screen/home/home_screen.dart';
 import 'package:tourism_app/screen/search/search_screen.dart';
-import 'package:tourism_app/screen/theme/theme_screen.dart';
+import 'package:tourism_app/screen/settings/settings_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -18,7 +18,7 @@ class MainScreen extends StatelessWidget {
             0 => HomeScreen(),
             1 => SearchScreen(),
             2 => FavoritesScreen(),
-            _ => ThemeScreen(),
+            _ => SettingsScreen(),
           };
         },
       ),
@@ -46,9 +46,9 @@ class MainScreen extends StatelessWidget {
             tooltip: 'Favorites',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.wb_sunny),
-            label: 'Theme',
-            tooltip: 'Theme',
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+            tooltip: 'Settings',
           ),
         ],
       ),

@@ -11,6 +11,7 @@ import 'package:tourism_app/provider/home/restaurant_list_provider.dart';
 import 'package:tourism_app/provider/home/search_restaurant_provider.dart';
 import 'package:tourism_app/provider/main/index_nav_provider.dart';
 import 'package:tourism_app/provider/notifications/local_notification_provider.dart';
+import 'package:tourism_app/provider/notifications/notification_provider.dart';
 import 'package:tourism_app/provider/review/customer_review_provider.dart';
 import 'package:tourism_app/provider/theme/theme_provider.dart';
 import 'package:tourism_app/screen/detail/detail_screen.dart';
@@ -61,6 +62,10 @@ void main() async {
           create: (context) => LocalNotificationProvider(
             context.read<LocalNotificationsService>(),
           )..requestPermissions(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              NotificationProvider(context.read<SharedPreferencesService>()),
         ),
       ],
       child: const MyApp(),
