@@ -44,7 +44,11 @@ void main() async {
         Provider(create: (context) => ApiService()),
         Provider(create: (context) => SharedPreferencesService(prefs)),
         Provider(create: (context) => LocalDatabaseService()),
-        Provider(create: (context) => LocalNotificationsService()..init()),
+        Provider(
+          create: (context) => LocalNotificationsService()
+            ..init()
+            ..configureLocalTimeZone(),
+        ),
         ChangeNotifierProvider(create: (context) => IndexNavProvider()),
         ChangeNotifierProvider(
           create: (context) =>
