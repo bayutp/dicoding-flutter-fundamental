@@ -15,7 +15,7 @@ void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     final String route = NavigationRoute.mainRoute.name;
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(initialRoute: route,));
+    await tester.pumpWidget(MyApp(initialRoute: route));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

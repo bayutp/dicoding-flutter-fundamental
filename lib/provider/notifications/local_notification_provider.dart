@@ -16,16 +16,6 @@ class LocalNotificationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void showNotifications() {
-    _notificationId += 1;
-    localNotificationsService.showNotifications(
-      id: _notificationId,
-      title: "New Notification",
-      body: "This is a new notification with id $_notificationId",
-      payload: "rqdv5juczeskfw1e867",
-    );
-  }
-
   List<PendingNotificationRequest> pendingNotificationRequests = [];
 
   void scheduleDailyNotification() {

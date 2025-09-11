@@ -82,50 +82,20 @@ class LocalNotificationsService {
     }
   }
 
-  Future<void> showNotifications({
-    required int id,
-    required String title,
-    required String body,
-    required payload,
-    String channelId = "1",
-    String channelName = "Simple notifications",
-  }) async {
-    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      channelId,
-      channelName,
-      importance: Importance.max,
-      priority: Priority.high,
-    );
-
-    const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
-    final notificationDetails = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-      iOS: iOSPlatformChannelSpecifics,
-    );
-
-    await flutterLocalNotificationsPlugin.show(
-      id,
-      title,
-      body,
-      notificationDetails,
-      payload: payload,
-    );
-  }
-
   Future<void> configureLocalTimeZone() async {
     tz.initializeTimeZones();
     final String timeZoneName = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName));
   }
 
-  tz.TZDateTime _nextInstanceOfTenAM() {
+  tz.TZDateTime _nextInstanceDailyNotification() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduleDate = tz.TZDateTime(
       tz.local,
       now.year,
       now.month,
       now.day,
-      10,
+      11,
     );
     if (scheduleDate.isBefore(now)) {
       scheduleDate = scheduleDate.add(const Duration(days: 1));
@@ -160,16 +130,17 @@ class LocalNotificationsService {
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics,
     );
-    final dateTimeSchedule = _nextInstanceOfTenAM();
+    final dateTimeSchedule = _nextInstanceDailyNotification();
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
-      "Daily scheduled notification title",
-      "This is a body of daily scheduled notification",
+      "Restaurant App",
+      "Hi, jangan lupa makan siang ya! Ada banyak rekomendasi resto buat kamu nih, buruan cek ya!",
       dateTimeSchedule,
       notificationDetails,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
+      payload: "rqdv5juczeskfw1e867",
     );
   }
 
