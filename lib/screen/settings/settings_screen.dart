@@ -4,9 +4,9 @@ import 'package:tourism_app/data/model/setting_notification.dart';
 import 'package:tourism_app/data/model/setting_theme.dart';
 import 'package:tourism_app/provider/notifications/local_notification_provider.dart';
 import 'package:tourism_app/provider/notifications/notification_provider.dart';
-import 'package:tourism_app/provider/notifications/payload_provider.dart';
 import 'package:tourism_app/provider/theme/theme_provider.dart';
 import 'package:tourism_app/service/local_notifications_service.dart';
+import 'package:tourism_app/service/workmanager_service.dart';
 import 'package:tourism_app/static/navigation_route.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -48,13 +48,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         if (notifProvider.settingNotification?.notificationEnabled == true) {
           final granted = localNotifProvider.permission;
           if (granted == true) {
-            await _scheduleDailyNotification();
+            // await _scheduleDailyNotification();
+            _runBackgroundTask();
           } else {
             await _requestPermission();
           }
         } else {
           //cancel notif
           _cancelNotification();
+          _cancelAllTaskInBackground();
         }
       });
     });
@@ -139,21 +141,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
     selectNotificationStream.stream.listen((String? payload) {
       if (mounted) {
         // context.read<PayloadProvider>().payload = payload;
-        // payload == null
-        //     ? Navigator.pushNamed(context, NavigationRoute.mainRoute.name)
-        //     : Navigator.pushNamed(
-        //         context,
-        //         NavigationRoute.detailRoute.name,
-        //         arguments: payload,
-        //       );
+        // if (payload != null && payload.isNotEmpty) {
+        //   Navigator.pushNamed(
+        //     context,
+        //     NavigationRoute.detailRoute.name,
+        //     arguments: payload,
+        //   );
+        //   debugPrint("Payload: if >> $payload");
+        // } else {
+        //   debugPrint("Payload else: >> $payload");
+        // }
         Navigator.pushNamed(context, NavigationRoute.mainRoute.name);
       }
     });
   }
 
-  Future<void> _scheduleDailyNotification() async {
-    context.read<LocalNotificationProvider>().scheduleDailyNotification();
-  }
+  // Future<void> _scheduleDailyNotification() async {
+  //   context.read<LocalNotificationProvider>().scheduleDailyNotification();
+  // }
 
   Future<void> _cancelNotification() async {
     final localnotifProvider = context.read<LocalNotificationProvider>();
@@ -167,6 +172,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ..cancelNotification(data.first.id)
         ..checkPendingNotificationRequests(context);
     }
+  }
+
+  void _runBackgroundTask() async {
+    context.read<WorkmanagerService>().runOneOffTask();
+  }
+
+  void _cancelAllTaskInBackground() async {
+    context.read<WorkmanagerService>().cancelAllTask();
   }
 
   // Future<void> _checkPendingNotificationRequests() async {

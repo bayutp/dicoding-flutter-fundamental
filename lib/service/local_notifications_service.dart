@@ -5,6 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:tourism_app/data/model/restaurant.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -114,6 +115,7 @@ class LocalNotificationsService {
 
   Future<void> scheduleDailyNotification({
     required int id,
+    required Restaurant restaurant,
     String channelId = "3",
     String channelName = "Schedule Notification",
   }) async {
@@ -135,12 +137,12 @@ class LocalNotificationsService {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       "Restaurant App",
-      "Hi, jangan lupa makan siang ya! Ada banyak rekomendasi resto buat kamu nih, buruan cek ya!",
+      "Hi, jangan lupa makan siang ya! Resto ${restaurant.name} ada menu baru nih buat kamu, buruan cek ya!",
       dateTimeSchedule,
       notificationDetails,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
-      payload: "rqdv5juczeskfw1e867",
+      payload: restaurant.id,
     );
   }
 

@@ -20,6 +20,7 @@ import 'package:tourism_app/screen/main/main_screen.dart';
 import 'package:tourism_app/screen/review/review_screen.dart';
 import 'package:tourism_app/service/local_notifications_service.dart';
 import 'package:tourism_app/service/shared_preferences_service.dart';
+import 'package:tourism_app/service/workmanager_service.dart';
 import 'package:tourism_app/static/navigation_route.dart';
 import 'package:tourism_app/style/theme/restaurant_theme.dart';
 
@@ -49,6 +50,7 @@ void main() async {
             ..init()
             ..configureLocalTimeZone(),
         ),
+        Provider(create: (context) => WorkmanagerService()..init()),
         ChangeNotifierProvider(create: (context) => IndexNavProvider()),
         ChangeNotifierProvider(
           create: (context) =>

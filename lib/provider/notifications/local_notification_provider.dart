@@ -7,7 +7,7 @@ class LocalNotificationProvider extends ChangeNotifier {
 
   LocalNotificationProvider(this.localNotificationsService);
 
-  int _notificationId = 0;
+  // int _notificationId = 0;
   bool? _permission = false;
   bool? get permission => _permission;
 
@@ -18,10 +18,10 @@ class LocalNotificationProvider extends ChangeNotifier {
 
   List<PendingNotificationRequest> pendingNotificationRequests = [];
 
-  void scheduleDailyNotification() {
-    _notificationId += 1;
-    localNotificationsService.scheduleDailyNotification(id: _notificationId);
-  }
+  // void scheduleDailyNotification() {
+  //   _notificationId += 1;
+  //   localNotificationsService.scheduleDailyNotification(id: _notificationId);
+  // }
 
   Future<void> checkPendingNotificationRequests(BuildContext context) async {
     pendingNotificationRequests = await localNotificationsService
