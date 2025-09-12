@@ -34,7 +34,7 @@ void main() async {
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
     final notificationResponse =
         notificationAppLaunchDetails?.notificationResponse;
-    route = NavigationRoute.detailRoute.name;
+    // route = NavigationRoute.detailRoute.name;
     payload = notificationResponse?.payload;
   }
 

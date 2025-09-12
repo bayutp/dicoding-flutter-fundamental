@@ -138,14 +138,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void _configureSelectNotificationSubject() {
     selectNotificationStream.stream.listen((String? payload) {
       if (mounted) {
-        context.read<PayloadProvider>().payload = payload;
-        payload == null
-            ? Navigator.pushNamed(context, NavigationRoute.mainRoute.name)
-            : Navigator.pushNamed(
-                context,
-                NavigationRoute.detailRoute.name,
-                arguments: payload,
-              );
+        // context.read<PayloadProvider>().payload = payload;
+        // payload == null
+        //     ? Navigator.pushNamed(context, NavigationRoute.mainRoute.name)
+        //     : Navigator.pushNamed(
+        //         context,
+        //         NavigationRoute.detailRoute.name,
+        //         arguments: payload,
+        //       );
+        Navigator.pushNamed(context, NavigationRoute.mainRoute.name);
       }
     });
   }
