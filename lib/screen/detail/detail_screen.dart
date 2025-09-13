@@ -65,17 +65,22 @@ class _DetailScreenState extends State<DetailScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                restaurant.name,
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.headlineLarge,
+                              Expanded(
+                                flex: 3,
+                                child: Text(
+                                  restaurant.name,
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.headlineLarge,
+                                ),
                               ),
                               SizedBox(width: 8),
-                              ChangeNotifierProvider(
-                                create: (context) => FavoritesIconProvider(),
-                                child: FavoritesIconWidget(
-                                  restaurant: restaurant,
+                              Expanded(
+                                child: ChangeNotifierProvider(
+                                  create: (context) => FavoritesIconProvider(),
+                                  child: FavoritesIconWidget(
+                                    restaurant: restaurant,
+                                  ),
                                 ),
                               ),
                             ],
