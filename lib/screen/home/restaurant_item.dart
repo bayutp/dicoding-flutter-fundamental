@@ -31,6 +31,9 @@ class RestaurantItem extends StatelessWidget {
                   child: Image.network(
                     Helper.imgUrl(restaurant.pictureId, 'medium'),
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(Icons.broken_image_rounded, size: 80, color: RestaurantColors.grey.colors,);
+                    },
                   ),
                 ),
               ),
