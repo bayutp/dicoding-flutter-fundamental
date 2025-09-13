@@ -23,7 +23,7 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<RestaurantDetailProvider>();
       provider.getRestaurantDetail(widget.id);
     });
