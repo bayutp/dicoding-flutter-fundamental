@@ -109,8 +109,10 @@ class _MyAppState extends State<MyApp> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInitTheme) {
-      final provider = context.read<ThemeProvider>();
-      provider.getTheme();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final provider = context.read<ThemeProvider>();
+        provider.getTheme();
+      });
       _isInitTheme = true;
     }
   }
