@@ -18,9 +18,9 @@ class _MenuRestaurantWidgetState extends State<MenuRestaurantWidget> {
   void initState() {
     super.initState();
 
-    CategoryProvider provider = context.read<CategoryProvider>();
-    provider.setCategory = "foods";
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      CategoryProvider provider = context.read<CategoryProvider>();
+      provider.setCategory = "foods";
       selectedCategory = provider.selectedCategory;
     });
   }

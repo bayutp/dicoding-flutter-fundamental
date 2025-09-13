@@ -17,10 +17,10 @@ class _FavoritesIconWidgetState extends State<FavoritesIconWidget> {
   void initState() {
     super.initState();
 
-    final localDbProvider = context.read<LocalDbProvider>();
-    final favoritesIconProvider = context.read<FavoritesIconProvider>();
-
-    Future.microtask(() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final localDbProvider = context.read<LocalDbProvider>();
+      final favoritesIconProvider = context.read<FavoritesIconProvider>();
+      
       await localDbProvider.loadDataFavoritesById(widget.restaurant.id);
       final isFavorites = localDbProvider.checkItemFavorites(
         widget.restaurant.id,

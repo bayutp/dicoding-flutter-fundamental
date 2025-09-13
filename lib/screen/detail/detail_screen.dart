@@ -23,8 +23,8 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
 
-    final provider = context.read<RestaurantDetailProvider>();
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      final provider = context.read<RestaurantDetailProvider>();
       provider.getRestaurantDetail(widget.id);
     });
   }
