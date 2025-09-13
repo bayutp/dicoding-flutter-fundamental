@@ -104,13 +104,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool _isInitTheme = false;
   @override
-  void initState() {
-    final provider = context.read<ThemeProvider>();
-    Future.microtask(() {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitTheme) {
+      final provider = context.read<ThemeProvider>();
       provider.getTheme();
-    });
-    super.initState();
+      _isInitTheme = true;
+    }
   }
 
   // This widget is the root of your application.
@@ -122,7 +124,7 @@ class _MyAppState extends State<MyApp> {
           title: 'Restaurant App',
           theme: RestaurantTheme.lightTheme,
           darkTheme: RestaurantTheme.darkTheme,
-          themeMode: value.settingTheme!.isDark
+          themeMode: value.settingTheme?.isDark ?? false
               ? ThemeMode.dark
               : ThemeMode.light,
           initialRoute: widget.initialRoute,
