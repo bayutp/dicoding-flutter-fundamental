@@ -1,7 +1,7 @@
 # Restaurant App 🍽️  
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.24-blue)](https://flutter.dev)  
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](#)  
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/bayutp/dicoding-flutter-fundamental/blob/master/LICENSE)  
 
 Submission project untuk kelas [Belajar Fundamental Aplikasi Flutter](https://www.dicoding.com/academies/195).  
 
